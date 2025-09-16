@@ -4,7 +4,7 @@
 
 using namespace std;
 
-static void printMenu() {
+static void printMenu() { // menu for the user to use when it comes to selecting a function of what they want to do 
     cout << "menu \n";
     cout << "1) Find value \n";
     cout << "2) Modify value at given index\n";
@@ -15,8 +15,8 @@ static void printMenu() {
     cout << "Choice: ";
 }
 
-static void Arraysize(const ArrayManager& rawarray) {
-    cout << "Array size is " << rawarray.size();
+static void Arraysize(const ArrayManager& rawarray) { // shows the array size by making the i variable representing the size of the array = to 0 and then checking it against the raw array until the given one is the same as the raw array
+    cout << "Array size is  " << rawarray.size();
     for (size_t i = 0; i < rawarray.size(); ++i) {
         cout << rawarray.at(i);
         if(i+1 != rawarray.size()) {
@@ -63,13 +63,13 @@ int main() {
             else cout << "The number you are looking for is not in the index\n";
             break;
         }
-        case 2: { // modify (with try/catch around user input path)
+        case 2: { // modify 
             try {
                 cout << "Enter index to modify: ";
                 long Temp_index_storage; // accept wide range before casting
                 cin >> Temp_index_storage;
                 if (!cin) throw invalid_argument("Non-numeric index.");
-                if (Temp_index_storage < 0) throw out_of_range("Index must be non-negative.");
+                if (Temp_index_storage < 0) throw out_of_range("Index must be positive.");
 
                 size_t Index_location = static_cast<size_t>(Temp_index_storage);
 
@@ -78,7 +78,7 @@ int main() {
                 cin >> number_value;
                 if (!cin) throw invalid_argument("Non-numeric value.");
 
-                ChangeResult res = rawarray.modifyAt(Index_location, number_value); // may throw out_of_range
+                ChangeResult res = rawarray.modifyAt(Index_location, number_value); // could potentially result in a out of range error
                 cout << "Modified index " << Index_location
                      << " old value was " << res.oldValue << ", new value is " << res.newValue << ")\n";
             } catch (const out_of_range& ex) {
@@ -88,14 +88,14 @@ int main() {
             }
             break;
         }
-        case 3: { // add (with try/catch around user input path)
+        case 3: { // add 
             try {
-                cout << "Enter value to append: ";
+                cout << "Enter value to add to the end of the array: ";
                 int a;
                 cin >> a;
                 if (!cin) throw invalid_argument("Non-numeric value.");
-                rawarray.pushBack(a); // may throw overflow_error if full
-                cout << "Appended.\n";
+                rawarray.pushBack(a); // could potentially result in a overthrow error potentially
+                cout << "added.\n";
             } catch (const overflow_error& ex) {
                 cerr << "Array full: " << ex.what() << "\n";
             } catch (const exception& ex) {
@@ -105,13 +105,13 @@ int main() {
         }
         case 4: { // remove
             try {
-                cout << "Enter index to remove: ";
+                cout << "Enter index to remove number: ";
                 long Temp_index_storage;
                 cin >> Temp_index_storage;
                 if (!cin) throw invalid_argument("Non-numeric index.");
                 if (Temp_index_storage < 0) throw out_of_range("Index must be positive.");
                 size_t Index_location = static_cast<size_t>(Temp_index_storage);
-                rawarray.removeAt(Index_location); // may throw out_of_range
+                rawarray.removeAt(Index_location); // could potentially result in a out of range error
                 cout << "Removed index " << Index_location << ".\n";
             } catch (const exception& ex) {
                 cerr << "Remove error: " << ex.what() << "\n";
@@ -120,7 +120,7 @@ int main() {
         }
         case 5: { // print
             try {
-                Arraysize(rawarray); // at() is bounds-checked
+                Arraysize(rawarray); 
             } catch (const exception& ex) {
                 cerr << "unable to print " << ex.what() << "\n";
             }
