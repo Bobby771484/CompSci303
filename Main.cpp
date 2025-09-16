@@ -68,7 +68,7 @@ int main() {
                 cout << "Enter index to modify: ";
                 long Temp_index_storage; // accept wide range before casting
                 cin >> Temp_index_storage;
-                if (!cin) throw invalid_argument("Non-numeric index.");
+                if (!cin) throw invalid_argument("not a usable value.");
                 if (Temp_index_storage < 0) throw out_of_range("Index must be positive.");
 
                 size_t Index_location = static_cast<size_t>(Temp_index_storage);
@@ -76,7 +76,7 @@ int main() {
                 cout << "Enter new value: ";
                 int number_value;
                 cin >> number_value;
-                if (!cin) throw invalid_argument("Non-numeric value.");
+                if (!cin) throw invalid_argument("not a usable value.");
 
                 ChangeResult res = rawarray.modifyAt(Index_location, number_value); // could potentially result in a out of range error
                 cout << "Modified index " << Index_location
